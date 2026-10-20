@@ -63,7 +63,9 @@ export default function DefaultLayout({ children, page }) {
 
 			<Navigation page={page}/>
             {children}
-			<Footer page={page}/>
+			<editable-component data-component="footer" data-prop="@data[footer]">
+				<Footer {...data.footer} />
+			</editable-component>
 
 			<script src="/vendor/jQuery/jquery.min.js" async></script>
 			<script src="/vendor/bootstrap/bootstrap.bundle.min.js" async></script>

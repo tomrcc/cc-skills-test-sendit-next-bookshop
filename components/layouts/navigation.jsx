@@ -30,7 +30,7 @@ export default function Navigation({ children, page }) {
                 <nav className={`navbar navbar-expand-lg position-fixed w-100 zindex-dropdown${isSticky ? " sticky-nav" : ""}`} id="mainnavigationBar">
                     <div className="container-fluid">
                         <Link className="navbar-brand" href="/">
-                            <img src={data.navigation.logo} alt="Nav-Logo" />
+                            <img src={data.navigation.logo} alt="Nav-Logo" data-editable="image" data-prop-src="@data[nav].logo" />
                         </Link>
                         <button
                             className="navbar-toggler"
@@ -108,12 +108,12 @@ export default function Navigation({ children, page }) {
                             </span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mx-auto mb-20 mb-lg-0">
+                            <ul className="navbar-nav mx-auto mb-20 mb-lg-0" data-editable="array" data-prop="@data[nav].items">
 
                                 {data.navigation.items.map((link, i) => (
-                                    <li key={i} className="nav-item">
+                                    <li key={i} className="nav-item" data-editable="array-item">
                                         <Link href={`${link.link}`} className={`nav-link ${(page?.slug === 'index' ? 'home' : page?.slug?.toLowerCase()) === link.text.toLowerCase() ? 'active' : ''}`}>
-                                            {link.text}
+                                            <editable-text data-prop="text">{link.text}</editable-text>
                                         </Link>
                                     </li>
                                 ))}
@@ -122,7 +122,7 @@ export default function Navigation({ children, page }) {
                         <div className="d-none d-lg-block">
                             <div className="nav-item">
                                 <Link href={`${data.navigation.button.link}`} className="btn btn-sm btn-links">
-                                    {data.navigation.button.text}
+                                    <editable-text data-prop="@data[nav].button.text">{data.navigation.button.text}</editable-text>
                                 </Link>
                             </div>
                         </div>

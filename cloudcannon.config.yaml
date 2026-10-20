@@ -2,79 +2,256 @@ paths:
   static: public
   uploads: public/uploads
 collections_config:
-  data:
-    path: data
-    disable_add: true
-    disable_add_folder: true
   pages:
     path: content/pages
-    url: '/[slug]'
+    url: /[slug]
     icon: wysiwyg
     _enabled_editors:
       - visual
+      - data
     schemas:
       default:
         name: New Page
         path: schemas/page.md
+        new_preview_url: /about
+      blog_index:
+        name: Blog index
+        path: schemas/blog-index.md
+    add_options:
+      - name: New Page
+        schema: default
+        icon: wysiwyg
   blog:
     path: content/posts
-    url: '/blog/[slug]'
+    url: /blog/[slug]
+    icon: post_add
     _enabled_editors:
-      - content
       - visual
+      - content
+      - data
     schemas:
       default:
         path: schemas/post.mdx
+  data:
+    path: data
+    glob:
+      - '**/*.json'
+    disable_url: true
+    disable_add: true
+    disable_add_folder: true
+    icon: settings
+    _enabled_editors:
+      - data
+
+collection_groups:
+  - heading: Content
+    collections:
+      - pages
+      - blog
+  - heading: Site
+    collections:
+      - data
+
+data_config:
+  nav:
+    path: data/nav.json
+  footer:
+    path: data/footer.json
+  blog:
+    path: data/blog.json
+
+file_config:
+  - glob: data/nav.json
+    _inputs:
+      $:
+        type: object
+        options:
+          preview:
+            icon: menu
+      logo:
+        type: image
+      items:
+        type: array
+        options:
+          structures: _structures.nav_items
+      button:
+        type: object
+        options:
+          preview:
+            icon: ads_click
+      text:
+        type: text
+      link:
+        type: url
+  - glob: data/footer.json
+    _inputs:
+      $:
+        type: object
+        options:
+          preview:
+            icon: bottom_navigation
+      logo:
+        type: image
+      logo_url:
+        type: url
+        comment: Link for the logo in the top left of the footer
+      copyright:
+        type: text
+        comment: Automatically prefixed with the current year
+      social:
+        type: array
+        options:
+          structures: _structures.footer_social
+      sections:
+        type: array
+        options:
+          structures: _structures.footer_sections
+      title:
+        type: text
+      text:
+        type: text
+      link:
+        type: url
+  - glob: data/blog.json
+    _inputs:
+      $:
+        type: object
+        options:
+          preview:
+            icon: post_add
+      recent_posts_title:
+        type: text
+        comment: Heading above the recent posts at the end of each blog post
+      reading_time_label:
+        type: text
+        comment: Shown after the reading time in minutes on each blog post
+      word_count_label:
+        type: text
+        comment: Shown after the word count on each blog post
+  - glob: data/site.json
+    _inputs:
+      $:
+        type: object
+        options:
+          preview:
+            icon: travel_explore
+      baseurl:
+        type: url
+      site_title:
+        type: text
+      description:
+        type: textarea
+      favicon_icon:
+        type: image
+        comment: For the shortcut icon meta tag
+      favicon_image:
+        type: image
+        comment: For the icon meta tag
+      twitter_site:
+        type: twitter
+      image:
+        type: image
+      image_alt:
+        type: text
+  - glob: data/theme.json
+    _inputs:
+      $:
+        type: object
+        options:
+          preview:
+            icon: palette
+      primary_color:
+        type: color
+      secondary_color:
+        type: color
+      anchor_color:
+        type: color
+      background_effects_color:
+        type: color
 
 _inputs:
+  _type:
+    hidden: true
+  _schema:
+    hidden: true
+  content_blocks:
+    type: array
+    options:
+      structures: _structures.content_blocks
+  title:
+    type: text
+  description:
+    type: markdown
+    options:
+      bold: true
+      italic: true
+      link: true
+      removeformat: true
+      undo: true
+      redo: true
   date:
+    type: datetime
     instance_value: NOW
-  title_suffix:
-    comment: Added at the end of the title and highlighted in a different color
+    comment: Changes to the date show on the page after the next build
+  author:
+    type: text
+  tags:
+    type: array
+    comment: Each tag gets its own listing page
+  tags[*]:
+    type: text
+  image:
+    type: image
+  image_alt:
+    type: text
+    comment: Describes the image for screen readers
+  thumbImg:
+    type: object
+    options:
+      preview:
+        icon: image
+  featuredImg:
+    type: object
+    options:
+      preview:
+        icon: image
+  thumbImg.image:
+    type: image
+  featuredImg.image:
+    type: image
+  pagination:
+    type: object
+    options:
+      preview:
+        icon: format_list_numbered
   pagination.size:
     type: number
-  social:
+  seo:
+    type: object
     options:
       preview:
-        icon: link
-  links:
-    options:
-      preview:
-        icon: link
-  items:
-    options:
-      preview:
-        icon: link
-  'social[*].icon':
-    type: select
-    options:
-      values:
-        - ph-facebook-logo
-        - ph-instagram-logo
-        - ph-twitter-logo
-        - ph-github-logo
-        - ph-youtube-logo
-  logo_url:
-    comment: Link for the logo in the top left of the footer
-  copyright:
-    comment: Automatically prefixed with the current year
-  isActive:
-    type: switch
+        icon: travel_explore
   page_description:
+    type: textarea
     comment: Defaults to the description set in the Site SEO data file
-  favicon_icon:
-    type: image
-    comment: For the shortcut icon meta tag
-  faivcon_image:
-    type: image
-    comment: For the icon meta tag
   canonical_url:
+    type: text
     comment: Defaults to the pages url
   featured_image:
+    type: image
     comment: Defaults to the image set in the Site SEO data file
+  featured_image_alt:
+    type: text
   open_graph_type:
+    type: select
     comment: Defaults to the type 'website'
+    options:
+      allow_empty: true
+      values:
+        - website
+        - article
   author_twitter_handle:
+    type: text
     comment: Defaults to the twitter site value set in the Site SEO data file
   no_index:
     type: checkbox
@@ -95,13 +272,6 @@ _editables:
     subscript: true
     superscript: true
     underline: true
-
-_structures:
-  features:
-    values:
-      - value:
-          item: 
-          isActive: 
 
 _snippets_imports:
   mdx: true
@@ -142,3 +312,1342 @@ _snippets:
     _inputs:
       button_link:
         type: url
+
+_structures:
+  content_blocks:
+    style: modal
+    values:
+    - label: About Hero
+      description: About Hero section
+      icon: apps
+      tags:
+      - hero
+      picker_preview:
+        text:
+        - About Hero
+        icon:
+        - apps
+      preview:
+        text:
+        - key: title
+        - About Hero
+        subtext:
+        - About Hero
+        icon:
+        - apps
+      value:
+        _type: about/hero
+        title: One mission to make the better marketing
+        description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+        hero_images: []
+        button:
+          text: See more
+          link: '#counter-up'
+      _inputs:
+        title:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        hero_images:
+          type: array
+          options:
+            structures: _structures.about_hero_images
+        button:
+          type: object
+          options:
+            preview:
+              icon: ads_click
+        button.text:
+          type: text
+        button.link:
+          type: url
+    - label: About Team
+      description: About Team section
+      icon: groups
+      tags: []
+      picker_preview:
+        text:
+        - About Team
+        icon:
+        - groups
+      preview:
+        text:
+        - key: title
+        - About Team
+        subtext:
+        - About Team
+        icon:
+        - groups
+      value:
+        _type: about/team
+        title: Our leadership & Team Members
+        team_members: []
+      _inputs:
+        title:
+          type: text
+        team_members:
+          type: array
+          options:
+            structures: _structures.team_members
+    - label: About Video
+      description: About Video section
+      icon: play_circle
+      tags: []
+      picker_preview:
+        text:
+        - About Video
+        icon:
+        - play_circle
+      preview:
+        text:
+        - key: title
+        - About Video
+        subtext:
+        - About Video
+        icon:
+        - play_circle
+        image:
+        - key: video.image
+      value:
+        _type: about/video
+        title: We Love our works
+        description: On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish.
+        button:
+          link: https://www.linkedin.com/
+          text: Follow on Linkedin
+        video:
+          image: /images/works/banner.jpg
+          image_alt: Placeholder image for the video
+          link: https://vimeo.com/45830194
+      _inputs:
+        title:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        video:
+          type: object
+          options:
+            preview:
+              icon: smart_display
+        video.image:
+          type: image
+        video.image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        video.link:
+          type: url
+        button:
+          type: object
+          options:
+            preview:
+              icon: ads_click
+        button.text:
+          type: text
+        button.link:
+          type: url
+    - label: Form
+      description: Form section
+      icon: check_box
+      tags: []
+      picker_preview:
+        text:
+        - Form
+        icon:
+        - check_box
+      preview:
+        text:
+        - Form
+        subtext:
+        - Form
+        icon:
+        - check_box
+      value:
+        _type: contact/form
+        address:
+          heading: Office Address
+          address: 1421 San Pedro St, Los Angeles, CA 90015
+        phone:
+          heading: Phone
+          cell: (546) 232 - 9872
+          image: /images/contact/call-add.svg
+          image_alt: call-add
+        email:
+          heading: Email
+          email: hello@example.com
+          image: /images/contact/directbox-send.svg
+          image_alt: send-box
+        form:
+          heading: Say Hello
+          fullname:
+            heading: Full Name
+            placeholder: Enter First Name
+          phone_number:
+            heading: Phone number
+            placeholder: Enter Phone Number
+          email:
+            heading: Email Address
+            placeholder: Enter Email Address
+          message:
+            heading: Your Messages
+            placeholder: Any Message
+          submit_button:
+            text: Send message
+      _inputs:
+        address:
+          type: object
+          options:
+            preview:
+              icon: location_on
+        address.heading:
+          type: text
+        address.address:
+          type: text
+        phone:
+          type: object
+          options:
+            preview:
+              icon: call
+        phone.heading:
+          type: text
+        phone.cell:
+          type: text
+        phone.image:
+          type: image
+        phone.image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        email:
+          type: object
+          options:
+            preview:
+              icon: mail
+        email.heading:
+          type: text
+        email.email:
+          type: email
+        email.image:
+          type: image
+        email.image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        form:
+          type: object
+          options:
+            preview:
+              icon: edit_note
+        form.heading:
+          type: text
+        fullname:
+          type: object
+          options:
+            preview:
+              icon: person
+        phone_number:
+          type: object
+          options:
+            preview:
+              icon: call
+        form.email:
+          type: object
+          options:
+            preview:
+              icon: mail
+        message:
+          type: object
+          options:
+            preview:
+              icon: edit_note
+        heading:
+          type: text
+        placeholder:
+          type: text
+        submit_button:
+          type: object
+          options:
+            preview:
+              icon: send
+        submit_button.text:
+          type: text
+    - label: Contact Hero
+      description: Contact Hero section
+      icon: contact_support
+      tags:
+      - hero
+      picker_preview:
+        text:
+        - Contact Hero
+        icon:
+        - contact_support
+      preview:
+        text:
+        - key: title
+        - Contact Hero
+        subtext:
+        - Contact Hero
+        icon:
+        - contact_support
+      value:
+        _type: contact/hero
+        title: Let's talk.
+        description: We take our commitment to our users seriously. Have a question or suggestion? Feel free to drop us a message!
+      _inputs:
+        title:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+    - label: Feature Hero
+      description: Feature Hero section
+      icon: contactless
+      tags:
+      - hero
+      picker_preview:
+        text:
+        - Feature Hero
+        icon:
+        - contactless
+      preview:
+        text:
+        - key: title
+        - Feature Hero
+        subtext:
+        - Feature Hero
+        icon:
+        - contactless
+        image:
+        - key: image
+      value:
+        _type: feature/hero
+        title: Email campaigns Features
+        description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+        button:
+          link: /signup
+          text: Try This Free
+        image: /images/feature/feature-hero.png
+        image_alt: Graphs
+      _inputs:
+        title:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        image:
+          type: image
+        image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        button:
+          type: object
+          options:
+            preview:
+              icon: ads_click
+        button.text:
+          type: text
+        button.link:
+          type: url
+    - label: Counter
+      description: Counter section
+      icon: functions
+      tags: []
+      picker_preview:
+        text:
+        - Counter
+        icon:
+        - functions
+      preview:
+        text:
+        - key: title
+        - Counter
+        subtext:
+        - Counter
+        icon:
+        - functions
+      value:
+        _type: global/counter
+        title: Design for your
+        title_suffix: Business
+        description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+        alternate_style: false
+        numbers: []
+      _inputs:
+        title:
+          type: text
+        title_suffix:
+          type: text
+          comment: Added at the end of the title and highlighted in a different color
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        alternate_style:
+          type: switch
+          comment: Uses the compact layout with less bottom padding
+        numbers:
+          type: array
+          options:
+            structures: _structures.counter_numbers
+    - label: Error
+      description: '404'
+      icon: error
+      tags: []
+      picker_preview:
+        text:
+        - Error
+        icon:
+        - error
+      preview:
+        text:
+        - Error
+        subtext:
+        - Error
+        icon:
+        - error
+        image:
+        - key: image
+      value:
+        _type: global/error
+        description: Something is wrong here!
+        image: /images/404/error.png
+        image_alt: Error
+        button:
+          text: Try again
+          link: /
+      _inputs:
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        image:
+          type: image
+        image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        button:
+          type: object
+          options:
+            preview:
+              icon: ads_click
+        button.text:
+          type: text
+        button.link:
+          type: url
+    - label: FAQ
+      description: FAQ section
+      icon: checklist
+      tags: []
+      picker_preview:
+        text:
+        - FAQ
+        icon:
+        - checklist
+      preview:
+        text:
+        - key: title
+        - FAQ
+        subtext:
+        - FAQ
+        icon:
+        - checklist
+      value:
+        _type: global/faq
+        title: Have
+        title_suffix: Questions?
+        description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+        FAQ: []
+      _inputs:
+        title:
+          type: text
+        title_suffix:
+          type: text
+          comment: Added at the end of the title and highlighted in a different color
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        FAQ:
+          type: array
+          options:
+            structures: _structures.faq_items
+    - label: Feature
+      description: Feature section
+      icon: stars
+      tags: []
+      picker_preview:
+        text:
+        - Feature
+        icon:
+        - stars
+      preview:
+        text:
+        - key: title
+        - Feature
+        subtext:
+        - Feature
+        icon:
+        - stars
+        image:
+        - key: image
+      value:
+        _type: global/feature
+        image: /images/feature/feature-card-one.png
+        image_alt: Message inbox
+        title: Text Message in One Minute
+        description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+        button:
+          link: /signup
+          text: Try This Free
+        reversed: false
+      _inputs:
+        title:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        image:
+          type: image
+        image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        reversed:
+          type: switch
+          comment: Shows the image on the left
+        button:
+          type: object
+          options:
+            preview:
+              icon: ads_click
+        button.text:
+          type: text
+        button.link:
+          type: url
+    - label: Header
+      description: Header section
+      icon: task
+      tags: []
+      picker_preview:
+        text:
+        - Header
+        icon:
+        - task
+      preview:
+        text:
+        - key: title
+        - Header
+        subtext:
+        - Header
+        icon:
+        - task
+      value:
+        _type: global/header
+        title: Sendit
+        title_suffix: Features
+        description: Sendit is the most complete solution to create beautiful email designs, manage mails and send them out at the best price.
+        remove_top_padding: false
+      _inputs:
+        title:
+          type: text
+        title_suffix:
+          type: text
+          comment: Added at the end of the title and highlighted in a different color
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        remove_top_padding:
+          type: switch
+    - label: Login
+      description: Login section
+      icon: login
+      tags: []
+      picker_preview:
+        text:
+        - Login
+        icon:
+        - login
+      preview:
+        text:
+        - key: title
+        - Login
+        subtext:
+        - Login
+        icon:
+        - login
+      value:
+        _type: global/login
+        title: Log In
+        fullname:
+          heading: Full Name
+          placeholder: Your Name
+        email:
+          heading: Email Address
+          placeholder: Your Email
+        checkbox_text: Remember Me
+        forgot_password:
+          text: Forget Password
+          link: '#'
+        log_in_button:
+          text: Log In
+        divider_text: or
+        google_button_text: Sign In with Google
+        facebook_button_text: Sign In with FaceBook
+        sign_up_button:
+          link: /signup
+          text: Create an Account
+      _inputs:
+        title:
+          type: text
+        fullname:
+          type: object
+          options:
+            preview:
+              icon: person
+        email:
+          type: object
+          options:
+            preview:
+              icon: mail
+        heading:
+          type: text
+        placeholder:
+          type: text
+        checkbox_text:
+          type: text
+        forgot_password:
+          type: object
+          options:
+            preview:
+              icon: password
+        log_in_button:
+          type: object
+          options:
+            preview:
+              icon: login
+        sign_up_button:
+          type: object
+          options:
+            preview:
+              icon: border_color
+        text:
+          type: text
+        link:
+          type: url
+        divider_text:
+          type: text
+        google_button_text:
+          type: text
+        facebook_button_text:
+          type: text
+    - label: Sign Up
+      description: Sign up section
+      icon: login
+      tags: []
+      picker_preview:
+        text:
+        - Sign Up
+        icon:
+        - login
+      preview:
+        text:
+        - key: title
+        - Sign Up
+        subtext:
+        - Sign Up
+        icon:
+        - login
+      value:
+        _type: global/signup
+        title: Create Account
+        form:
+          fullname:
+            heading: Full Name
+            placeholder: Your Name
+          email:
+            heading: Email Address
+            placeholder: Your Email
+          password:
+            heading: Password
+          retype_password:
+            heading: Retype Password
+          checkbox_text: By registering, you accept our Conditions, Use Policy and Privacy Notice.
+          sign_up_text: Create an Account
+          divider_text: or
+          google_button_text: Sign In with Google
+          facebook_button_text: Sign In with FaceBook
+          log_in_button:
+            link: /login
+            text: Log In
+      _inputs:
+        title:
+          type: text
+        form:
+          type: object
+          options:
+            preview:
+              icon: edit_note
+        fullname:
+          type: object
+          options:
+            preview:
+              icon: person
+        email:
+          type: object
+          options:
+            preview:
+              icon: mail
+        password:
+          type: object
+          options:
+            preview:
+              icon: password
+        retype_password:
+          type: object
+          options:
+            preview:
+              icon: password
+        heading:
+          type: text
+        placeholder:
+          type: text
+        checkbox_text:
+          type: text
+        sign_up_text:
+          type: text
+        divider_text:
+          type: text
+        google_button_text:
+          type: text
+        facebook_button_text:
+          type: text
+        log_in_button:
+          type: object
+          options:
+            preview:
+              icon: login
+        text:
+          type: text
+        link:
+          type: url
+    - label: Testimonial
+      description: Testimonial section
+      icon: 3p
+      tags: []
+      picker_preview:
+        text:
+        - Testimonial
+        icon:
+        - 3p
+      preview:
+        text:
+        - key: title
+        - Testimonial
+        subtext:
+        - Testimonial
+        icon:
+        - 3p
+      value:
+        _type: global/testimonial
+        title: We Felt Proud When People Love our
+        title_suffix: Product
+        description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+        slider: []
+      _inputs:
+        title:
+          type: text
+        title_suffix:
+          type: text
+          comment: Added at the end of the title and highlighted in a different color
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        slider:
+          type: array
+          options:
+            structures: _structures.testimonial_slides
+    - label: Home Hero
+      description: Home Hero section
+      icon: cottage
+      tags:
+      - hero
+      picker_preview:
+        text:
+        - Home Hero
+        icon:
+        - cottage
+      preview:
+        text:
+        - key: title
+        - Home Hero
+        subtext:
+        - Home Hero
+        icon:
+        - cottage
+        image:
+        - key: image
+      value:
+        _type: home/hero
+        title: Email Marketing is Future for Grow Your Business Revenues
+        description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+        image: /images/hero/hero-image-2.png
+        image_alt: Dashboard with reports
+        button:
+          text: Try This Free
+          link: /signup
+      _inputs:
+        title:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+        image:
+          type: image
+        image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        button:
+          type: object
+          options:
+            preview:
+              icon: ads_click
+        button.text:
+          type: text
+        button.link:
+          type: url
+    - label: Home Video
+      description: Home Video section
+      icon: videocam
+      tags: []
+      picker_preview:
+        text:
+        - Home Video
+        icon:
+        - videocam
+      preview:
+        text:
+        - Home Video
+        subtext:
+        - Home Video
+        icon:
+        - videocam
+        image:
+        - key: image
+      value:
+        _type: home/video
+        image: /images/video/video-thum.jpg
+        image_alt: Thumbnail for video
+        video_url: https://vimeo.com/45830194
+      _inputs:
+        image:
+          type: image
+        image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        video_url:
+          type: url
+          comment: Vimeo link opened by the play button
+    - label: Pricing Hero
+      description: Pricing Hero section
+      icon: credit_card
+      tags:
+      - hero
+      picker_preview:
+        text:
+        - Pricing Hero
+        icon:
+        - credit_card
+      preview:
+        text:
+        - key: title
+        - Pricing Hero
+        subtext:
+        - Pricing Hero
+        icon:
+        - credit_card
+      value:
+        _type: pricing/hero
+        title: Choose a plan that works best for you.
+        description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+      _inputs:
+        title:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+    - label: Pricing Table
+      description: Pricing table section
+      icon: table_rows
+      tags: []
+      picker_preview:
+        text:
+        - Pricing Table
+        icon:
+        - table_rows
+      preview:
+        text:
+        - Pricing Table
+        subtext:
+        - Pricing Table
+        icon:
+        - table_rows
+      value:
+        _type: pricing/table
+        pricing_tier: []
+      _inputs:
+        pricing_tier:
+          type: array
+          options:
+            structures: _structures.pricing_tiers
+    - label: Hero
+      description: Hero section
+      icon: lock
+      tags:
+      - hero
+      picker_preview:
+        text:
+        - Hero
+        icon:
+        - lock
+      preview:
+        text:
+        - key: title
+        - Hero
+        subtext:
+        - Hero
+        icon:
+        - lock
+      value:
+        _type: privacy/hero
+        title: Terms & Condition
+      _inputs:
+        title:
+          type: text
+    - label: Privacy Policy
+      description: Privacy policy section
+      icon: lock
+      tags: []
+      picker_preview:
+        text:
+        - Privacy Policy
+        icon:
+        - lock
+      preview:
+        text:
+        - Privacy Policy
+        subtext:
+        - Privacy Policy
+        icon:
+        - lock
+      value:
+        _type: privacy/privacy
+        terms_and_conditions: []
+      _inputs:
+        terms_and_conditions:
+          type: array
+          options:
+            structures: _structures.privacy_terms
+  about_hero_images:
+    values:
+    - label: Hero Image
+      icon: image
+      preview:
+        text:
+        - key: image_alt
+        - Hero Image
+        icon:
+        - image
+        image:
+        - key: image
+      value:
+        image: /images/about/aboutfeature-two.png
+        image_alt: People working
+        placement: front_bottom
+      _inputs:
+        image:
+          type: image
+        image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        placement:
+          type: select
+          options:
+            value_key: id
+            preview:
+              text:
+              - key: name
+            values:
+            - name: Front, bottom
+              id: front_bottom
+            - name: Back, top right
+              id: back_top_right
+            - name: Back, top left
+              id: back_top_left
+  team_members:
+    values:
+    - label: Team Member
+      icon: badge
+      preview:
+        text:
+        - key: name
+        - Team Member
+        icon:
+        - badge
+        image:
+        - key: image
+      value:
+        name: Cody Fisher
+        designation: Co-Founder & CEO
+        image: /images/team/team-member-1.jpg
+        image_alt: 'Team member: Cody Fisher'
+      _inputs:
+        name:
+          type: text
+        designation:
+          type: text
+        image:
+          type: image
+        image_alt:
+          type: text
+          comment: Describes the image for screen readers
+  counter_numbers:
+    values:
+    - label: Number
+      icon: pin
+      preview:
+        text:
+        - key: number
+        - key: text
+        - Number
+        icon:
+        - pin
+      value:
+        prefix: $
+        number: '300'
+        suffix: m
+        text: Venture capital raised
+      _inputs:
+        prefix:
+          type: text
+        number:
+          type: text
+          comment: Animates up from zero on the live site
+        suffix:
+          type: text
+        text:
+          type: text
+  faq_items:
+    values:
+    - label: FAQ
+      icon: help
+      preview:
+        text:
+        - key: title
+        - FAQ
+        icon:
+        - help
+      value:
+        title: What if I unplug all selected apps at once?
+        description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim illo quasi quia doloremque dignissimos rerum perspiciatis, officiis optio natus beatae!
+      _inputs:
+        title:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+  testimonial_slides:
+    values:
+    - label: Testimonial
+      icon: format_quote
+      preview:
+        text:
+        - key: author
+        - Testimonial
+        icon:
+        - format_quote
+        image:
+        - key: image
+      value:
+        image: /images/testimonial/logo-2.jpg
+        image_alt: Profile photo of the Head of Development
+        author: Sherlock Homes
+        designation: Head of Dev. at Company
+        message: Eget eu massa et consectetur. Mauris donec. Leo a, id sed duis proin sodales. Turpis viverra diam porttitor mattis morbi ac amet.
+      _inputs:
+        image:
+          type: image
+        image_alt:
+          type: text
+          comment: Describes the image for screen readers
+        author:
+          type: text
+        designation:
+          type: text
+        message:
+          type: textarea
+  pricing_tiers:
+    values:
+    - label: Pricing Tier
+      icon: payments
+      preview:
+        text:
+        - key: tier
+        - Pricing Tier
+        icon:
+        - payments
+      value:
+        tier: free
+        highlight_tier: false
+        description: For starters Includes unlimited members
+        currency_symbol: $
+        price: '0'
+        has_discount: false
+        discount_price: '0'
+        features: []
+        button:
+          link: /login
+          text: Try This Free
+      _inputs:
+        tier:
+          type: text
+        highlight_tier:
+          type: switch
+        description:
+          type: textarea
+        currency_symbol:
+          type: text
+        price:
+          type: text
+        has_discount:
+          type: switch
+          comment: Shows the discount price, with the full price crossed out
+        discount_price:
+          type: text
+        features:
+          type: array
+          options:
+            structures: _structures.pricing_features
+        button:
+          type: object
+          options:
+            preview:
+              icon: ads_click
+        button.text:
+          type: text
+        button.link:
+          type: url
+  pricing_features:
+    values:
+    - label: Feature
+      icon: check_circle
+      preview:
+        text:
+        - key: item
+        - Feature
+        icon:
+        - check_circle
+      value:
+        item: 1 Site Activation
+        active_feature: true
+      _inputs:
+        item:
+          type: text
+        active_feature:
+          type: switch
+          comment: Inactive features show crossed out
+  privacy_terms:
+    values:
+    - label: Terms And Condition
+      icon: gavel
+      preview:
+        text:
+        - key: heading
+        - Terms And Condition
+        icon:
+        - gavel
+      value:
+        heading: Sendit Terms And Conditions
+        description: <p>By using Sendit, you agree to the terms and conditions listed on this page.</p><p>Sendit may change the terms on this page. We will take steps to notify you when this occurs, but you are responsible for staying up-to-date with these changes.</p>
+      _inputs:
+        heading:
+          type: text
+        description:
+          type: markdown
+          options:
+            bold: true
+            italic: true
+            link: true
+            removeformat: true
+            undo: true
+            redo: true
+            bulletedlist: true
+            numberedlist: true
+            blockquote: true
+            format: p h3 h4
+  nav_items:
+    values:
+    - label: Nav link
+      icon: link
+      preview:
+        text:
+        - key: text
+        - Nav link
+        icon:
+        - link
+      value:
+        link: /
+        text: Home
+      _inputs:
+        text:
+          type: text
+        link:
+          type: url
+  footer_social:
+    values:
+    - label: Social link
+      icon: share
+      preview:
+        text:
+        - key: icon_alt
+        - Social link
+        icon:
+        - share
+      value:
+        link: https://
+        icon: ph-facebook-logo
+        icon_alt: Facebook
+      _inputs:
+        link:
+          type: url
+        icon_alt:
+          type: text
+          comment: Read out by screen readers
+        icon:
+          type: select
+          options:
+            value_key: id
+            preview:
+              text:
+              - key: name
+            values:
+            - name: Facebook
+              id: ph-facebook-logo
+            - name: Instagram
+              id: ph-instagram-logo
+            - name: Twitter
+              id: ph-twitter-logo
+            - name: GitHub
+              id: ph-github-logo
+            - name: YouTube
+              id: ph-youtube-logo
+  footer_sections:
+    values:
+    - label: Link column
+      icon: list
+      preview:
+        text:
+        - key: title
+        - Link column
+        icon:
+        - list
+      value:
+        title: Main Pages
+        links: []
+      _inputs:
+        title:
+          type: text
+        links:
+          type: array
+          options:
+            structures: _structures.footer_links
+  footer_links:
+    values:
+    - label: Link
+      icon: link
+      preview:
+        text:
+        - key: text
+        - Link
+        icon:
+        - link
+      value:
+        link: /
+        text: Home
+      _inputs:
+        text:
+          type: text
+        link:
+          type: url

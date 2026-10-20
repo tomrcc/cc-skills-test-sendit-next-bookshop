@@ -1,8 +1,11 @@
 $(document).ready(function () {
    'use strict';
 
+   // The lightbox steals clicks and the count-up rewrites editable text, so neither runs in the Visual Editor.
+   const inEditor = window.inEditorMode;
+
    // Magnific Popup
-   $('.popup-vimeo').magnificPopup({
+   if (!inEditor) $('.popup-vimeo').magnificPopup({
       disableOn: 700,
       type: 'iframe',
       mainClass: 'mfp-fade',
@@ -29,7 +32,7 @@ $(document).ready(function () {
    const IO = new IntersectionObserver(callback, { threshold: 1 })
 
    const els = document.querySelectorAll('.counter')
-   els.forEach(el => {
+   if (!inEditor) els.forEach(el => {
       IO.observe(el)
    })
 

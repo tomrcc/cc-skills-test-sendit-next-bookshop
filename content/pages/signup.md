@@ -8,7 +8,7 @@ seo:
   open_graph_type:
   no_index: false
 content_blocks:
-  - _bookshop_name: global/signup
+  - _type: global/signup
     title: Create Account
     form:
       fullname:
@@ -24,6 +24,9 @@ content_blocks:
       checkbox_text: By registering, you accept our Conditions, Use Policy and
         Privacy Notice.
       sign_up_text: Create an Account
+      divider_text: or
+      google_button_text: Sign In with Google
+      facebook_button_text: Sign In with FaceBook
       log_in_button:
         link: /login
         text: Log In

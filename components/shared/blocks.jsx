@@ -1,27 +1,19 @@
-import components from '../../components/**/*.jsx';
+import { blockMap } from '../../cloudcannon/componentMap';
 
-const getComponentKey = (name) => {
-    return `../../components/${name}.jsx`;
-};
-
-function Blocks({ children, content_blocks }) {
-    return <>
-        {content_blocks.map((block, i) =>{
-            const newDataBinding = `#content_blocks.${i}`
-            const componentPath = getComponentKey(block._bookshop_name);
-
-            const TargetComponent = Object.entries(components).filter(([k]) =>
-                k.endsWith(componentPath)
-            )?.[0]?.[1]?.default;
-
-            if (!TargetComponent) {
-                throw new Error(`Component not found for ${block._bookshop_name}: ${componentPath}`);
-            }
-            return (
-                <TargetComponent block={block} dataBinding={newDataBinding} key={i}/>
-            );
-        })}    
-    </>
+export default function Blocks({ content_blocks }) {
+	return (
+		<div data-editable="array" data-prop="content_blocks" data-component-key="_type">
+			{(content_blocks || []).map((block, i) => {
+				const Block = blockMap[block._type];
+				if (!Block) {
+					throw new Error(`No block component for _type "${block._type}"`);
+				}
+				return (
+					<div className="content-block" data-editable="array-item" data-component={block._type} key={i}>
+						<Block {...block} />
+					</div>
+				);
+			})}
+		</div>
+	);
 }
-
-export default Blocks;

@@ -9,19 +9,19 @@ seo:
   open_graph_type:
   no_index: false
 content_blocks:
-  - _bookshop_name: pricing/hero
+  - _type: pricing/hero
     title: A plan for everyone
     description: Sendit is easy to get started and we have a pricing plan for businesses of all sizes.
 
-  - _bookshop_name: pricing/table
+  - _type: pricing/table
     pricing_tier:
       - tier: Free
         highlight_tier: false
         description: Everything you need to get started.
         currency_symbol: $
-        price: 0
+        price: "0"
         has_discount: false
-        discount_price: 0
+        discount_price: "0"
         features:
           - item: 1 Email Campaign
             active_feature: true
@@ -48,9 +48,9 @@ content_blocks:
         highlight_tier: true
         description: More collaborative power and unlimited boards for fast-growing.
         currency_symbol: $
-        price: 199
+        price: "199"
         has_discount: true
-        discount_price: 125
+        discount_price: "125"
         features:
           - item: 1 Email Campaign
             active_feature: true
@@ -77,9 +77,9 @@ content_blocks:
         highlight_tier: false
         description: For starters Includes unlimited members
         currency_symbol: $
-        price: 499
+        price: "499"
         has_discount: true
-        discount_price: 350
+        discount_price: "350"
         features:
           - item: 1 Email Campaign
             active_feature: true
@@ -103,7 +103,7 @@ content_blocks:
           link: /signup
           text: Try This Free
 
-  - _bookshop_name: global/faq
+  - _type: global/faq
     title: Have
     title_suffix: Questions?
     description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.

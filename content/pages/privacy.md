@@ -9,9 +9,9 @@ seo:
   open_graph_type:
   no_index: false
 content_blocks:
-  - _bookshop_name: privacy/hero
+  - _type: privacy/hero
     title: Terms & Conditions
-  - _bookshop_name: privacy/privacy
+  - _type: privacy/privacy
     terms_and_conditions:
       - heading: Sendit Terms And Conditions
         description: >-

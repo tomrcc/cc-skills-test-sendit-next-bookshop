@@ -1,0 +1,45 @@
+// Each page-builder block sits in a `.content-block` wrapper, so sibling rules between sections match the wrappers.
+.content-block:has(> .pricing-inner) + .content-block > .pricing,
+.content-block:has(> .pricing-inner) + .content-block > .pricing-two {
+  margin-top: -$base-margin * 21.5;
+
+  @include media-breakpoint-down-md {
+    margin-top: -$base-margin * 25;
+  }
+}
+
+.content-block:has(> .privacy-hero) + .content-block > .privacy {
+  margin-top: -$base-margin * 33.5;
+
+  @include media-breakpoint-down-md {
+    margin-top: -$base-margin * 35.8;
+  }
+}
+
+.content-block:has(> .contact-hero) + .content-block > .contact {
+  .contact-form > form {
+    margin-top: -$base-margin * 28.2;
+
+    @include media-breakpoint-down-xl {
+      margin-top: -$base-margin * 22;
+    }
+
+    @include media-breakpoint-down-lg {
+      margin-top: -$base-margin * 17;
+    }
+  }
+}
+
+.array-contents {
+  display: contents;
+}
+
+.cms-editor-active [data-editable="array"]:empty {
+  min-height: 3rem;
+  min-width: 8rem;
+}
+
+// Opens every FAQ answer in the Visual Editor so each one can be edited in place.
+.cms-editor-active .faq-two .accordion-collapse.collapse {
+  display: block;
+}
