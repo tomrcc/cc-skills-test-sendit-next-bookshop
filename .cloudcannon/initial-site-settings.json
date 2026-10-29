@@ -1,10 +1,9 @@
 {
-    "ssg": "nextjs",
-    "build_configuration": {
-        "preserved_paths": "",
-        "environment_variables": [],
-        "install_command": "",
-	    "build_command": "",
-        "output_path": "out"
-    }
+  "ssg": "nextjs",
+  "build": {
+    "install_command": "npm ci",
+    "build_command": "npm run build",
+    "output_path": "out",
+    "preserved_paths": "node_modules/,.next/"
+  }
 }

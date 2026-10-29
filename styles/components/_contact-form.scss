@@ -176,7 +176,8 @@
   }
 }
 
-.contact-hero + .contact {
+.contact-hero + .contact,
+:has(> .contact-hero) + :has(> .contact) > .contact {
   .contact-form > form {
   margin-top: -$base-margin * 28.2;
 

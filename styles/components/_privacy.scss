@@ -156,7 +156,8 @@
   }
 }
 
-.privacy-hero + .privacy {
+.privacy-hero + .privacy,
+:has(> .privacy-hero) + :has(> .privacy) > .privacy {
   margin-top: -$base-margin * 33.5;
 
   @include media-breakpoint-down-md {

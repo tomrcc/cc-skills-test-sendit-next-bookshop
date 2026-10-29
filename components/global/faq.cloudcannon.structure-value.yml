@@ -1,0 +1,29 @@
+label: FAQ
+description: FAQ section
+icon: checklist
+picker_preview:
+  text:
+    - FAQ
+  icon:
+    - checklist
+preview:
+  text:
+    - key: title
+    - FAQ
+  icon:
+    - checklist
+value:
+  _type: global/faq
+  title: Have
+  title_suffix: Questions?
+  description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+  FAQ: []
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+_inputs:
+  FAQ:
+    type: array
+    label: Questions
+    options:
+      structures: _structures.faq_items

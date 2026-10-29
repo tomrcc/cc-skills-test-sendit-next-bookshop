@@ -104,6 +104,10 @@
     }
   }
 
+  &-images {
+    display: contents;
+  }
+
   &-banner {
     position: relative;
     width: 100%;

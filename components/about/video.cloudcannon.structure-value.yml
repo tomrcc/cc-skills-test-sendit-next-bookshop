@@ -1,0 +1,42 @@
+label: About Video
+description: About Video section
+icon: play_circle
+picker_preview:
+  text:
+    - About Video
+  icon:
+    - play_circle
+preview:
+  text:
+    - key: title
+    - About Video
+  icon:
+    - play_circle
+  image:
+    - key: video.image
+value:
+  _type: about/video
+  title: We Love our works
+  description: On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish.
+  button:
+    link: https://www.linkedin.com/
+    text: Follow on Linkedin
+  video:
+    image: /images/works/banner.jpg
+    image_alt: Placeholder image for the video
+    link: https://vimeo.com/45830194
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/image.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/button.cloudcannon.inputs.yml
+_inputs:
+  video:
+    type: object
+    options:
+      preview:
+        icon: play_circle
+  video.link:
+    type: url
+    label: Video link
+    comment: A Vimeo or YouTube link, opened in a popup

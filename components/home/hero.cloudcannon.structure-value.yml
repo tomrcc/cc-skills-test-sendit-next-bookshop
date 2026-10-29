@@ -1,0 +1,32 @@
+label: Home Hero
+description: Home Hero section
+icon: cottage
+tags:
+  - hero
+picker_preview:
+  text:
+    - Home Hero
+  icon:
+    - cottage
+preview:
+  text:
+    - key: title
+    - Home Hero
+  icon:
+    - cottage
+  image:
+    - key: image
+value:
+  _type: home/hero
+  title: Email Marketing is Future for Grow Your Business Revenues
+  description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+  image: /images/hero/hero-image-2.png
+  image_alt: Dashboard with reports
+  button:
+    text: Try This Free
+    link: /signup
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/image.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/button.cloudcannon.inputs.yml

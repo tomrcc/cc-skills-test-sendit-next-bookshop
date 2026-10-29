@@ -1,0 +1,23 @@
+label: Pricing Hero
+description: Pricing Hero section
+icon: credit_card
+tags:
+  - hero
+picker_preview:
+  text:
+    - Pricing Hero
+  icon:
+    - credit_card
+preview:
+  text:
+    - key: title
+    - Pricing Hero
+  icon:
+    - credit_card
+value:
+  _type: pricing/hero
+  title: Choose a plan that works best for you.
+  description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml

@@ -1,42 +1,42 @@
-export default function GlobalLogin({ block, dataBinding }) {
+export default function GlobalLogin(block) {
     return (
-        <section className="sing-up pt-md-20 pt-18 pb-md-20 pb-10" data-cms-bind={dataBinding}>
+        <section className="sing-up pt-md-20 pt-18 pb-md-20 pb-10">
             <div className="container">
                 <div className="row">
                     <div className="col-xxl-7 col-lg-8 mx-auto">
                         <div className="sing-up-body">
-                            <h2>
+                            <h2 data-editable="text" data-prop="title">
                                 {block.title}
                             </h2>
-                            <form className="sing-up-items row gy-4 gx-3">
+                            <form className="sing-up-items row gy-4 gx-3" onSubmit={(event) => { if (window.inEditorMode) event.preventDefault(); }}>
                                 <div className="col-md-12">
-                                    <label for="fullName" className="form-label">{block.fullname.heading}</label>
+                                    <label for="fullName" className="form-label" data-editable="text" data-prop="fullname.heading">{block.fullname.heading}</label>
                                     <input type="text" className="form-control" id="fullName" placeholder={block.fullname.placeholder} />
                                 </div>
                                 <div className="col-md-12">
-                                    <label for="pEmailId" className="form-label">{block.email.heading}</label>
+                                    <label for="pEmailId" className="form-label" data-editable="text" data-prop="email.heading">{block.email.heading}</label>
                                     <input type="email" className="form-control" id="pEmailId" placeholder={block.email.placeholder} />
                                 </div>
                                 <div className="col-6">
                                     <div className="form-check">
                                         <input className="form-check-input" type="checkbox" id="gridCheck" />
                                         <label className="form-check-label" for="gridCheck">
-                                            {block.checkbox_text}
+                                            <editable-text data-prop="checkbox_text">{block.checkbox_text}</editable-text>
                                         </label>
                                     </div>
                                 </div>
                                 <div className="col-6">
                                     <div className="form-check ps-0  text-end">
                                         <label className="form-check-label" for="gridCheck">
-                                            <a href="#" className="forget-password"> Forget Password</a>
+                                            <a href="#" className="forget-password"> <editable-text data-prop="forgot_password_text">{block.forgot_password_text}</editable-text></a>
                                         </label>
                                     </div>
                                 </div>
                                 <div className="col-md-12">
-                                    <button type="submit" className="btn btn-submit  w-100">{block.log_in_button.text}</button>
+                                    <button type="submit" className="btn btn-submit  w-100"><editable-text data-prop="log_in_button.text">{block.log_in_button.text}</editable-text></button>
                                 </div>
                                 <div className="col-md-12 mt-3">
-                                    <label for="" className="d-block text-center mb-0">or</label>
+                                    <label for="" className="d-block text-center mb-0" data-editable="text" data-prop="divider_text">{block.divider_text}</label>
                                 </div>
                                 <div className="button-group">
                                     <button type="submit" className="btn btn-submit btn-social w-100">
@@ -63,7 +63,7 @@ export default function GlobalLogin({ block, dataBinding }) {
                                                 d="M12.9339 6.08805C13.1513 6.25109 13.4555 6.22932 13.6402 6.03372L15.9657 3.71916C16.0635 3.61053 16.1287 3.46927 16.1178 3.3171C16.1069 3.16494 16.0417 3.01288 15.9222 2.91504C14.2705 1.52417 12.1624 0.727295 10 0.727295V5.11011C11.0649 5.11011 12.0755 5.44697 12.9339 6.08805Z"
                                                 fill="white" />
                                         </svg>
-                                        Sign In with Google
+                                        <editable-text data-prop="google_button_text">{block.google_button_text}</editable-text>
                                     </button>
                                     <button type="submit" className="btn btn-submit btn-social w-100">
                                         <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,12 +71,12 @@ export default function GlobalLogin({ block, dataBinding }) {
                                                 d="M11.9 28.9508V19.0996H8.19995V14.6996H12V11.4996C12 7.59961 14.4 5.59961 17.7 5.59961C19.3 5.59961 20.7 5.69961 21.1 5.79961V9.79961H18.7999C16.9 9.69961 16.5 10.5996 16.5 11.7996V14.5996H21L20.4 18.9996H16.5V29.0775C23.6656 28.1463 29.2 22.0195 29.2 14.6C29.2 6.53664 22.6634 0 14.6 0C6.53664 0 0 6.53664 0 14.6C0 21.7409 5.12653 27.6844 11.9 28.9508Z"
                                                 fill="white" />
                                         </svg>
-                                        Sign In with FaceBook
+                                        <editable-text data-prop="facebook_button_text">{block.facebook_button_text}</editable-text>
                                     </button>
                                 </div>
                                 <div className="divider mt-9"></div>
                                 <div className="col-md-12">
-                                    <a href={block.sign_up_button.link} className="create-account">{block.sign_up_button.text}</a>
+                                    <a href={block.sign_up_button.link} className="create-account"><editable-text data-prop="sign_up_button.text">{block.sign_up_button.text}</editable-text></a>
                                 </div>
                             </form>
                     </div>

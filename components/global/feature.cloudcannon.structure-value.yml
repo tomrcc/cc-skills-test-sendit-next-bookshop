@@ -1,0 +1,35 @@
+label: Feature
+description: Feature section
+icon: stars
+picker_preview:
+  text:
+    - Feature
+  icon:
+    - stars
+preview:
+  text:
+    - key: title
+    - Feature
+  icon:
+    - stars
+  image:
+    - key: image
+value:
+  _type: global/feature
+  image: /images/feature/feature-card-one.png
+  image_alt: Message inbox
+  title: Text Message in One Minute
+  description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+  button:
+    link: /signup
+    text: Try This Free
+  reversed: false
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/image.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/button.cloudcannon.inputs.yml
+_inputs:
+  reversed:
+    type: switch
+    comment: Puts the image on the right

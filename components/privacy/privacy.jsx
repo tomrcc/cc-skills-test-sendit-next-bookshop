@@ -4,7 +4,7 @@ const md = new MarkdownIt({ html: true });
 import { createRef } from 'react'
 import { Scrollspy } from "@makotot/ghostui";
 
-export default function PrivacyPrivacy({ block, dataBinding }) {
+export default function PrivacyPrivacy(block) {
     const sectionRefs = [];
     block.terms_and_conditions.map((privacy, i) => (
         sectionRefs.push(createRef())
@@ -16,7 +16,7 @@ export default function PrivacyPrivacy({ block, dataBinding }) {
         event.currentTarget.classList.add('active');
     };
     return (
-        <section className="privacy" data-cms-bind={dataBinding}>
+        <section className="privacy">
             <div className="container">
                 <div className="row">
                     <Scrollspy sectionRefs={sectionRefs} offset={-90}>
@@ -28,15 +28,17 @@ export default function PrivacyPrivacy({ block, dataBinding }) {
                                         data-bs-target="#navbar-example2"
                                         data-bs-offset="0"
                                         className="scrollspy-example"
+                                        data-editable="array"
+                                        data-prop="terms_and_conditions"
                                         tabIndex="0"
                                     >
 
                                         {block.terms_and_conditions.map((privacy, i) => (
-                                            <div className="privacy-items" id={`item${i + 1}`} key={i} ref={sectionRefs[i]}>
+                                            <div className="privacy-items" id={`item${i + 1}`} key={i} ref={sectionRefs[i]} data-editable="array-item">
                                                 <div className="card">
-                                                    <h3 className="sub-title">{privacy.heading}</h3>
+                                                    <h3 className="sub-title" data-editable="text" data-prop="heading">{privacy.heading}</h3>
                                                     <div className="card-body">
-                                                        <div className="card-text" dangerouslySetInnerHTML={{ __html: md.render(privacy.description) }} />
+                                                        <div className="card-text" data-editable="text" data-type="block" data-prop="description" dangerouslySetInnerHTML={{ __html: md.render(privacy.description) }} />
                                                     </div>
                                                 </div>
                                             </div>

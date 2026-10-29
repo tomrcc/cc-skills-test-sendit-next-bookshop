@@ -1,0 +1,745 @@
+timezone: Etc/UTC
+
+paths:
+  static: public
+  uploads: public/images
+
+collections_config:
+  pages:
+    path: content/pages
+    url: /[slug]
+    icon: wysiwyg
+    disable_add_folder: true
+    create:
+      path: "[relative_base_path]/{title|slugify}.[ext]"
+    _enabled_editors:
+      - visual
+      - data
+    schemas:
+      default:
+        name: Page
+        path: .cloudcannon/schemas/page.md
+        new_preview_url: /about
+      blog_index:
+        name: Blog Index
+        path: .cloudcannon/schemas/blog-index.md
+        _inputs_from_glob:
+          - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+        _inputs:
+          title:
+            type: text
+          pagination:
+            type: object
+            options:
+              preview:
+                icon: format_list_numbered
+          pagination.size:
+            type: number
+            label: Posts per page
+    add_options:
+      - name: Page
+        schema: default
+        icon: wysiwyg
+    _inputs:
+      _schema:
+        hidden: true
+      title:
+        type: text
+        comment: Used in the browser tab and search results
+      content_blocks:
+        type: array
+        label: Page sections
+        options:
+          structures: _structures.content_blocks
+  blog:
+    path: content/posts
+    url: /blog/[slug]
+    icon: post_add
+    disable_add_folder: true
+    create:
+      path: "[relative_base_path]/{title|slugify}.[ext]"
+    _enabled_editors:
+      - visual
+      - content
+      - data
+    schemas:
+      default:
+        name: Blog Post
+        path: .cloudcannon/schemas/post.mdx
+    add_options:
+      - name: Blog Post
+        schema: default
+        icon: post_add
+        editor: content
+    _inputs:
+      title:
+        type: text
+      date:
+        type: datetime
+        instance_value: NOW
+      author:
+        type: text
+      tags:
+        type: multiselect
+        options:
+          value_key: id
+          preview:
+            text:
+              - key: name
+          values: data.tags
+      thumbImg:
+        type: object
+        label: Thumbnail image
+        comment: Shown on the blog listing
+        options:
+          preview:
+            icon: image
+      featuredImg:
+        type: object
+        label: Featured image
+        comment: Shown at the top of the post
+        options:
+          preview:
+            icon: image
+      image:
+        type: image
+      image_alt:
+        type: text
+        label: Image alt text
+  data:
+    path: data
+    glob:
+      - "*.json"
+    disable_url: true
+    disable_add: true
+    disable_add_folder: true
+    icon: settings
+    _enabled_editors:
+      - data
+
+collection_groups:
+  - heading: Content
+    collections:
+      - pages
+      - blog
+  - heading: Site settings
+    collections:
+      - data
+
+data_config:
+  footer:
+    path: data/footer.json
+  nav:
+    path: data/nav.json
+  site:
+    path: data/site.json
+  theme:
+    path: data/theme.json
+  tags:
+    path: data/tags.json
+  blog:
+    path: data/blog.json
+
+markdown:
+  engine: commonmark
+  options:
+    html: true
+
+_editables:
+  content:
+    snippet: true
+    blockquote: true
+    bold: true
+    bulletedlist: true
+    numberedlist: true
+    format: p h1 h2 h3 h4 h5 h6 pre address div
+    image: true
+    italic: true
+    link: true
+    removeformat: true
+    strike: true
+    subscript: true
+    superscript: true
+    underline: true
+
+_inputs:
+  seo:
+    type: object
+    label: SEO
+    options:
+      preview:
+        icon: search
+  page_description:
+    type: textarea
+    comment: Defaults to the description set in the Site SEO data file
+  canonical_url:
+    type: text
+    comment: Defaults to the page's URL
+  featured_image:
+    type: image
+    comment: Defaults to the image set in the Site SEO data file
+  featured_image_alt:
+    type: text
+  author_twitter_handle:
+    type: twitter
+    comment: Defaults to the twitter site value set in the Site SEO data file
+  open_graph_type:
+    type: select
+    comment: Defaults to the type 'website'
+    options:
+      allow_empty: true
+      values:
+        - website
+        - article
+  no_index:
+    type: switch
+    comment: Removes the page from search engines with the noindex robots meta tag
+
+_structures:
+  content_blocks:
+    style: modal
+    values_from_glob:
+      - /components/*/*.cloudcannon.structure-value.yml
+  about_hero_images:
+    values:
+      - label: Hero Image
+        icon: image
+        picker_preview:
+          text:
+            - Hero Image
+          icon:
+            - image
+        preview:
+          text:
+            - key: image_alt
+            - Hero Image
+          icon:
+            - image
+          image:
+            - key: image
+        value:
+          image: /images/about/aboutfeature-two.png
+          image_alt: People working
+          placement: front_bottom
+        _inputs_from_glob:
+          - /.cloudcannon/inputs/image.cloudcannon.inputs.yml
+        _inputs:
+          placement:
+            type: select
+            options:
+              value_key: id
+              preview:
+                text:
+                  - key: name
+              values:
+                - name: Front, bottom
+                  id: front_bottom
+                - name: Back, top right
+                  id: back_top_right
+                - name: Back, top left
+                  id: back_top_left
+  team_members:
+    values:
+      - label: Team Member
+        icon: badge
+        picker_preview:
+          text:
+            - Team Member
+          icon:
+            - badge
+        preview:
+          text:
+            - key: name
+            - Team Member
+          subtext:
+            - key: designation
+          icon:
+            - badge
+          image:
+            - key: image
+        value:
+          name: Cody Fisher
+          designation: Co-Founder & CEO
+          image: /images/team/team-member-1.jpg
+          image_alt: "Team member: Cody Fisher"
+        _inputs_from_glob:
+          - /.cloudcannon/inputs/image.cloudcannon.inputs.yml
+        _inputs:
+          name:
+            type: text
+          designation:
+            type: text
+  counter_numbers:
+    values:
+      - label: Number
+        icon: functions
+        picker_preview:
+          text:
+            - Number
+          icon:
+            - functions
+        preview:
+          text:
+            - key: text
+            - Number
+          subtext:
+            - key: number
+          icon:
+            - functions
+        value:
+          prefix: $
+          number: "300"
+          suffix: m
+          text: Venture capital raised
+        _inputs:
+          prefix:
+            type: text
+            comment: Shown before the number, such as $
+          number:
+            type: text
+            comment: Counts up from zero when it scrolls into view
+          suffix:
+            type: text
+            comment: Shown after the number, such as + or m
+          text:
+            type: text
+  faq_items:
+    values:
+      - label: Question
+        icon: help
+        picker_preview:
+          text:
+            - Question
+          icon:
+            - help
+        preview:
+          text:
+            - key: title
+            - Question
+          icon:
+            - help
+        value:
+          title: What if I unplug all selected apps at once?
+          description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim illo quasi quia doloremque dignissimos rerum perspiciatis, officiis optio natus beatae!
+        _inputs_from_glob:
+          - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+        _inputs:
+          title:
+            type: text
+            label: Question
+  testimonial_slides:
+    values:
+      - label: Testimonial
+        icon: format_quote
+        picker_preview:
+          text:
+            - Testimonial
+          icon:
+            - format_quote
+        preview:
+          text:
+            - key: author
+            - Testimonial
+          subtext:
+            - key: designation
+          icon:
+            - format_quote
+          image:
+            - key: image
+        value:
+          image: /images/testimonial/logo-2.jpg
+          image_alt: Profile photo of the Head of Development
+          author: Sherlock Homes
+          designation: Head of Dev. at Company
+          message: Eget eu massa et consectetur. Mauris donec. Leo a, id sed duis proin sodales. Turpis viverra diam porttitor mattis morbi ac amet.
+        _inputs_from_glob:
+          - /.cloudcannon/inputs/image.cloudcannon.inputs.yml
+        _inputs:
+          author:
+            type: text
+          designation:
+            type: text
+          message:
+            type: textarea
+  pricing_tiers:
+    values:
+      - label: Pricing Tier
+        icon: sell
+        picker_preview:
+          text:
+            - Pricing Tier
+          icon:
+            - sell
+        preview:
+          text:
+            - key: tier
+            - Pricing Tier
+          subtext:
+            - key: price
+          icon:
+            - sell
+        value:
+          tier: Free
+          highlight_tier: false
+          description: For starters Includes unlimited members
+          currency_symbol: $
+          price: "0"
+          has_discount: false
+          discount_price: "0"
+          features: []
+          button:
+            link: /login
+            text: Try This Free
+        _inputs_from_glob:
+          - /.cloudcannon/inputs/button.cloudcannon.inputs.yml
+        _inputs:
+          tier:
+            type: text
+            label: Tier name
+          highlight_tier:
+            type: switch
+            comment: Shows this tier as the featured plan
+          description:
+            type: textarea
+          currency_symbol:
+            type: text
+          price:
+            type: text
+          has_discount:
+            type: switch
+            comment: Shows the discount price, with the price struck through
+          discount_price:
+            type: text
+          features:
+            type: array
+            options:
+              structures: _structures.pricing_features
+  pricing_features:
+    values:
+      - label: Feature
+        icon: check_box
+        picker_preview:
+          text:
+            - Feature
+          icon:
+            - check_box
+        preview:
+          text:
+            - key: item
+            - Feature
+          icon:
+            - check_box
+        value:
+          item: 1 Site Activation
+          active_feature: true
+        _inputs:
+          item:
+            type: text
+          active_feature:
+            type: switch
+            comment: Off shows the feature as not included
+  privacy_terms:
+    values:
+      - label: Section
+        icon: lock
+        picker_preview:
+          text:
+            - Section
+          icon:
+            - lock
+        preview:
+          text:
+            - key: heading
+            - Section
+          icon:
+            - lock
+        value:
+          heading: Sendit Terms And Conditions
+          description: <p>By using Sendit, you agree to the terms and conditions listed on this page.</p><p>Sendit may change the terms on this page. We will take steps to notify you when this occurs, but you are responsible for staying up-to-date with these changes.</p>
+        _inputs_from_glob:
+          - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+        _inputs:
+          heading:
+            type: text
+  footer_social:
+    values:
+      - label: Social link
+        icon: share
+        picker_preview:
+          text:
+            - Social link
+          icon:
+            - share
+        preview:
+          text:
+            - key: icon_alt
+            - Social link
+          subtext:
+            - key: link
+          icon:
+            - share
+        value:
+          link:
+          icon: ph-facebook-logo
+          icon_alt:
+        _inputs:
+          link:
+            type: url
+          icon:
+            type: select
+            comment: Pick an icon or type a [Phosphor](https://phosphoricons.com/) class such as ph-linkedin-logo
+            options:
+              allow_create: true
+              value_key: id
+              preview:
+                text:
+                  - key: name
+              values:
+                - name: Facebook
+                  id: ph-facebook-logo
+                - name: Instagram
+                  id: ph-instagram-logo
+                - name: Twitter
+                  id: ph-twitter-logo
+                - name: GitHub
+                  id: ph-github-logo
+                - name: YouTube
+                  id: ph-youtube-logo
+          icon_alt:
+            type: text
+            label: Icon label
+  footer_sections:
+    values:
+      - label: Link section
+        icon: list_alt
+        picker_preview:
+          text:
+            - Link section
+          icon:
+            - list_alt
+        preview:
+          text:
+            - key: title
+            - Link section
+          icon:
+            - list_alt
+        value:
+          title:
+          links: []
+        _inputs:
+          title:
+            type: text
+          links:
+            type: array
+            options:
+              structures: _structures.links
+  links:
+    values:
+      - label: Link
+        icon: link
+        picker_preview:
+          text:
+            - Link
+          icon:
+            - link
+        preview:
+          text:
+            - key: text
+            - Link
+          subtext:
+            - key: link
+          icon:
+            - link
+        value:
+          text:
+          link:
+        _inputs:
+          text:
+            type: text
+          link:
+            type: url
+  tags:
+    values:
+      - label: Tag
+        icon: sell
+        picker_preview:
+          text:
+            - Tag
+          icon:
+            - sell
+        preview:
+          text:
+            - key: name
+            - Tag
+          subtext:
+            - key: id
+          icon:
+            - sell
+        value:
+          id:
+          name:
+        _inputs:
+          id:
+            type: text
+            comment: Lowercase, no spaces. Used in the tag page URL
+          name:
+            type: text
+
+file_config:
+  - glob: data/footer.json
+    _inputs:
+      $:
+        type: object
+        options:
+          preview:
+            icon: bottom_navigation
+      logo:
+        type: image
+      logo_url:
+        type: text
+        comment: Link for the logo in the top left of the footer
+      copyright:
+        type: text
+        comment: Automatically prefixed with the current year
+      social:
+        type: array
+        options:
+          structures: _structures.footer_social
+      sections:
+        type: array
+        options:
+          structures: _structures.footer_sections
+  - glob: data/nav.json
+    _inputs:
+      $:
+        type: object
+        options:
+          preview:
+            icon: menu
+      logo:
+        type: image
+      items:
+        type: array
+        label: Links
+        options:
+          structures: _structures.links
+      button:
+        type: object
+        options:
+          preview:
+            icon: ads_click
+      text:
+        type: text
+      link:
+        type: url
+  - glob: data/site.json
+    _inputs:
+      $:
+        type: object
+        label: Site SEO
+        options:
+          preview:
+            icon: public
+      baseurl:
+        type: url
+        comment: The live site's address, used for canonical and social links
+      site_title:
+        type: text
+      description:
+        type: textarea
+      favicon_icon:
+        type: image
+        comment: For the shortcut icon meta tag
+      favicon_image:
+        type: image
+        comment: For the icon meta tag
+      twitter_site:
+        type: twitter
+      image:
+        type: image
+        comment: The default social sharing image
+      image_alt:
+        type: text
+  - glob: data/theme.json
+    _inputs:
+      $:
+        type: object
+        options:
+          preview:
+            icon: palette
+      primary_color:
+        type: color
+      secondary_color:
+        type: color
+      anchor_color:
+        type: color
+      background_effects_color:
+        type: color
+  - glob: data/blog.json
+    _inputs:
+      $:
+        type: object
+        label: Blog labels
+        options:
+          preview:
+            icon: label
+      recent_posts_heading:
+        type: text
+        comment: Heading above the recent posts on each post page
+      reading_time_label:
+        type: text
+        comment: Shown after the reading time on each post
+      word_count_label:
+        type: text
+        comment: Shown after the word count on each post
+  - glob: data/tags.json
+    _inputs:
+      $:
+        type: array
+        label: Tags
+        options:
+          structures: _structures.tags
+
+_snippets:
+  button:
+    template: mdx_component
+    inline: false
+    picker_preview:
+      text: Button
+      icon: ads_click
+    preview:
+      text: Button
+      subtext:
+        - key: button_text
+      icon: ads_click
+    definitions:
+      component_name: ButtonSnippet
+      named_args:
+        - editor_key: button_text
+          type: string
+        - editor_key: button_link
+          type: string
+    _inputs:
+      button_text:
+        type: text
+      button_link:
+        type: url
+  iframe:
+    template: mdx_component
+    inline: false
+    picker_preview:
+      text: Embed
+      icon: web
+    preview:
+      text: Embed
+      subtext:
+        - key: src
+      icon: web
+    definitions:
+      component_name: IframeSnippet
+      named_args:
+        - editor_key: src
+          type: string
+    _inputs:
+      src:
+        type: url

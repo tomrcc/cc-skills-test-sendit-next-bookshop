@@ -12,7 +12,7 @@ export default function Page({ page }) {
 }
 
 export async function getStaticPaths() {
-	const slugs = (await filer.listItemSlugs('pages')).map((slug) => ({ params: { slug } }));
+	const slugs = (await filer.listItemSlugs('pages')).filter((slug) => !slug.startsWith('_')).map((slug) => ({ params: { slug } }));
 	const ignored = {
 		index: true,
 		blog: true,

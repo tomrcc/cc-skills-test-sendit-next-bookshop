@@ -1,0 +1,22 @@
+label: Privacy Policy
+description: Privacy policy section
+icon: lock
+picker_preview:
+  text:
+    - Privacy Policy
+  icon:
+    - lock
+preview:
+  text:
+    - Privacy Policy
+  icon:
+    - lock
+value:
+  _type: privacy/privacy
+  terms_and_conditions: []
+_inputs:
+  terms_and_conditions:
+    type: array
+    label: Sections
+    options:
+      structures: _structures.privacy_terms

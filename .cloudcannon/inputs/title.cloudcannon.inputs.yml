@@ -1,0 +1,5 @@
+title:
+  type: text
+title_suffix:
+  type: text
+  comment: Added at the end of the title and highlighted in a different color

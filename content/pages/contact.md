@@ -4,14 +4,15 @@ seo:
   page_description: 
   canonical_url: 
   featured_image: 
+  featured_image_alt: 
   author_twitter_handle: 
   open_graph_type:
   no_index: false
 content_blocks:
-  - _bookshop_name: contact/hero
+  - _type: contact/hero
     title: Let's talk.
     description: Have a question or suggestion? Feel free to drop us a message!
-  - _bookshop_name: contact/form
+  - _type: contact/form
     address:
       heading: Office Address
       address: 123 Train St, San Francisco, CA 9107

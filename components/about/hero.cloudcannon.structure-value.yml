@@ -1,0 +1,33 @@
+label: About Hero
+description: About Hero section
+icon: apps
+tags:
+  - hero
+picker_preview:
+  text:
+    - About Hero
+  icon:
+    - apps
+preview:
+  text:
+    - key: title
+    - About Hero
+  icon:
+    - apps
+value:
+  _type: about/hero
+  title: One mission to make the better marketing
+  description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+  hero_images: []
+  button:
+    text: See more
+    link: "#counter-up"
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/button.cloudcannon.inputs.yml
+_inputs:
+  hero_images:
+    type: array
+    options:
+      structures: _structures.about_hero_images

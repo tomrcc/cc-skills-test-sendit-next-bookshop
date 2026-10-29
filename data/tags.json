@@ -1,0 +1,18 @@
+[
+	{
+		"id": "blog",
+		"name": "Blog"
+	},
+	{
+		"id": "email",
+		"name": "Email"
+	},
+	{
+		"id": "marketing",
+		"name": "Marketing"
+	},
+	{
+		"id": "technology",
+		"name": "Technology"
+	}
+]

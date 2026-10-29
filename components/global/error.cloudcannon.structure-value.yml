@@ -1,0 +1,28 @@
+label: Error
+description: "404"
+icon: error
+picker_preview:
+  text:
+    - Error
+  icon:
+    - error
+preview:
+  text:
+    - key: description
+    - Error
+  icon:
+    - error
+  image:
+    - key: image
+value:
+  _type: global/error
+  description: Something is wrong here!
+  image: /images/404/error.png
+  image_alt: Error
+  button:
+    text: Try again
+    link: /
+_inputs_from_glob:
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/image.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/button.cloudcannon.inputs.yml

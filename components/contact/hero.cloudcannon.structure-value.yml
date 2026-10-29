@@ -1,0 +1,23 @@
+label: Contact Hero
+description: Contact Hero section
+icon: contact_support
+tags:
+  - hero
+picker_preview:
+  text:
+    - Contact Hero
+  icon:
+    - contact_support
+preview:
+  text:
+    - key: title
+    - Contact Hero
+  icon:
+    - contact_support
+value:
+  _type: contact/hero
+  title: Let's talk.
+  description: We take our commitment to our users seriously. Have a question or suggestion? Feel free to drop us a message!
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml

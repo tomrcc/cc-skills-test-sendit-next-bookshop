@@ -1,0 +1,21 @@
+label: Hero
+description: Hero section
+icon: lock
+tags:
+  - hero
+picker_preview:
+  text:
+    - Privacy Hero
+  icon:
+    - lock
+preview:
+  text:
+    - key: title
+    - Privacy Hero
+  icon:
+    - lock
+value:
+  _type: privacy/hero
+  title: Terms & Condition
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml

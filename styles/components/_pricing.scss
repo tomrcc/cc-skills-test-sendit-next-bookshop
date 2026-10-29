@@ -547,7 +547,9 @@
 }
 
 .pricing-inner + .pricing,
-.pricing-inner + .pricing-two {
+.pricing-inner + .pricing-two,
+:has(> .pricing-inner) + :has(> .pricing) > .pricing,
+:has(> .pricing-inner) + :has(> .pricing-two) > .pricing-two {
   margin-top: -$base-margin * 21.5;
 
   @include media-breakpoint-down-md {

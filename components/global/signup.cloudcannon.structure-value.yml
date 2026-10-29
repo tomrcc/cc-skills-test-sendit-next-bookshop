@@ -1,0 +1,90 @@
+label: Sign Up
+description: Sign up section
+icon: login
+picker_preview:
+  text:
+    - Sign Up
+  icon:
+    - login
+preview:
+  text:
+    - key: title
+    - Sign Up
+  icon:
+    - login
+value:
+  _type: global/signup
+  title: Create Account
+  form:
+    fullname:
+      heading: Full Name
+      placeholder: Your Name
+    email:
+      heading: Email Address
+      placeholder: Your Email
+    password:
+      heading: Password
+    retype_password:
+      heading: Retype Password
+    checkbox_text: By registering, you accept our Conditions, Use Policy and Privacy Notice.
+    sign_up_text: Create an Account
+    divider_text: or
+    google_button_text: Sign In with Google
+    facebook_button_text: Sign In with FaceBook
+    log_in_button:
+      link: /login
+      text: Log In
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+_inputs:
+  form:
+    type: object
+    options:
+      preview:
+        icon: list_alt
+  fullname:
+    type: object
+    options:
+      preview:
+        icon: person
+  email:
+    type: object
+    options:
+      preview:
+        icon: mail
+  password:
+    type: object
+    options:
+      preview:
+        icon: password
+  retype_password:
+    type: object
+    options:
+      preview:
+        icon: password
+  log_in_button:
+    type: object
+    options:
+      preview:
+        icon: login
+  heading:
+    type: text
+  placeholder:
+    type: text
+  checkbox_text:
+    type: textarea
+  divider_text:
+    type: text
+    comment: Shown between the sign-up buttons
+  google_button_text:
+    type: text
+  facebook_button_text:
+    type: text
+  sign_up_text:
+    type: text
+    label: Sign up button text
+  text:
+    type: text
+    label: Button text
+  link:
+    type: url

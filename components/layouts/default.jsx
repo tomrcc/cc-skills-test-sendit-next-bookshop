@@ -7,8 +7,8 @@ import Footer from './footer';
 export default function DefaultLayout({ children, page }) {
 	const title = page?.data.title ? `${page.data.title} | ${data.site.site_title}` : data.site.site_title;
 	const description = page?.data.seo?.page_description || data.site.description;
-	const image = page?.data.seo?.feature_image || data.site.image;
-	const image_alt = page?.data.seo?.feature_image_alt || data.site.image_alt;
+	const image = page?.data.seo?.featured_image || data.site.image;
+	const image_alt = page?.data.seo?.featured_image_alt || data.site.image_alt;
 
 	return (
 		<>

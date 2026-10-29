@@ -1,0 +1,27 @@
+label: Home Video
+description: Home Video section
+icon: videocam
+picker_preview:
+  text:
+    - Home Video
+  icon:
+    - videocam
+preview:
+  text:
+    - key: image_alt
+    - Home Video
+  icon:
+    - videocam
+  image:
+    - key: image
+value:
+  _type: home/video
+  image: /images/video/video-thum.jpg
+  image_alt: Thumbnail for video
+  video_url: https://vimeo.com/45830194
+_inputs_from_glob:
+  - /.cloudcannon/inputs/image.cloudcannon.inputs.yml
+_inputs:
+  video_url:
+    type: url
+    comment: A Vimeo or YouTube link, opened in a popup

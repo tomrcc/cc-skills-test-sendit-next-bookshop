@@ -13,16 +13,16 @@ export default function Footer({ children, page }) {
                             <div className="col-12 col-lg-4 me-auto order-2 order-lg-1">
                                 <div className="footer-logo mt-7 mt-md-0">
                                     <a href={data.footer.logo_url} className="">
-                                        <img src={data.footer.logo} alt="logo" />
+                                        <img data-editable="image" data-prop-src="@data[footer].logo" src={data.footer.logo} alt="logo" />
                                     </a>
                                     <p>
-                                        © Copyright <span>{new Date().getFullYear()}</span> {data.footer.copyright}
+                                        © Copyright <span>{new Date().getFullYear()}</span> <editable-text data-prop="@data[footer].copyright">{data.footer.copyright}</editable-text>
                                     </p>
                                 </div>
                                 <div className="social-icon">
-                                    <ul className="list-unstyled">
+                                    <ul className="list-unstyled" data-editable="array" data-prop="@data[footer].social">
                                         {data.footer.social.map((link, i) => (
-                                            <li key={i}>
+                                            <li key={i} data-editable="array-item">
                                                 <Link href={`${link.link}`}>
                                                     <i className={link.icon} aria-hidden="true"><span className="visually-hidden">{link.icon_alt}</span></i>
                                                 </Link>
@@ -35,12 +35,12 @@ export default function Footer({ children, page }) {
                             {data.footer.sections.map((section, i) => (
                                 <div className="col-6 col-md-3 col-lg-2 order-1" key={i}>
                                     <div className="footer-widget">
-                                        <h3 className="">{section.title}</h3>
-                                        <ul className="list-unstyled">
-                                            {section.links.map((link, i) => (
-                                                <li key={i}>
+                                        <h3 className="" data-editable="text" data-prop={`@data[footer].sections.${i}.title`}>{section.title}</h3>
+                                        <ul className="list-unstyled" data-editable="array" data-prop={`@data[footer].sections.${i}.links`}>
+                                            {section.links.map((link, j) => (
+                                                <li key={j} data-editable="array-item">
                                                     <Link href={`${link.link}`}>
-                                                        {link.text}
+                                                        <editable-text data-prop="text">{link.text}</editable-text>
                                                     </Link>
                                                 </li>
                                             ))}

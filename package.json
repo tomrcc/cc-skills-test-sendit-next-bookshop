@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run prebuild:fetch-theme-color && next build",
     "start": "next start",
     "prebuild:fetch-theme-color": "node fetch-theme-color.js",
     "lint": "next lint"
   },
   "dependencies": {
+    "@cloudcannon/editable-regions": "^0.0.22",
     "@cloudcannon/filer": "^0.0.3",
-    "@cloudcannon/react-connector": "^2.0.0",
     "@googlemaps/js-api-loader": "^1.12.2",
     "@makotot/ghostui": "^2.0.0",
     "@mdx-js/loader": "^3.1.0",
@@ -30,7 +30,7 @@
     "sass": "^1.39.1"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
-    "import-glob-keyed": "^0.0.1"
-  }
+    "eslint": "7.32.0"
+  },
+  "packageManager": "npm@11.19.1"
 }

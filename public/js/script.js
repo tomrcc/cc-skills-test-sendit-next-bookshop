@@ -1,6 +1,8 @@
 $(document).ready(function () {
    'use strict';
 
+   // The Visual Editor needs the clicks and the field values these scripts take over.
+   if (!window.inEditorMode) {
    // Magnific Popup
    $('.popup-vimeo').magnificPopup({
       disableOn: 700,
@@ -32,6 +34,7 @@ $(document).ready(function () {
    els.forEach(el => {
       IO.observe(el)
    })
+   }
 
 
 

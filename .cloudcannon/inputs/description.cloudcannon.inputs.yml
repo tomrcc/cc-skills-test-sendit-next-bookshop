@@ -1,0 +1,12 @@
+description:
+  type: markdown
+  options:
+    bold: true
+    italic: true
+    strike: true
+    link: true
+    bulletedlist: true
+    numberedlist: true
+    removeformat: true
+    undo: true
+    redo: true

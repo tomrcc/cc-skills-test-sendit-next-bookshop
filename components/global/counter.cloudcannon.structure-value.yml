@@ -1,0 +1,32 @@
+label: Counter
+description: Counter section
+icon: functions
+picker_preview:
+  text:
+    - Counter
+  icon:
+    - functions
+preview:
+  text:
+    - key: title
+    - Counter
+  icon:
+    - functions
+value:
+  _type: global/counter
+  title: Design for your
+  title_suffix: Business
+  description: We believe that a good email marketing strategy is the key to growth. So we’re helping you grow your business with tools and resources that make email marketing easy.
+  alternate_style: false
+  numbers: []
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+  - /.cloudcannon/inputs/description.cloudcannon.inputs.yml
+_inputs:
+  alternate_style:
+    type: switch
+    comment: Uses the alternate layout with extra bottom spacing
+  numbers:
+    type: array
+    options:
+      structures: _structures.counter_numbers

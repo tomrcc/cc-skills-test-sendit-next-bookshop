@@ -10,8 +10,11 @@ export default function BlogList({ page, posts, headline, pageNo, pageSlug }) {
                 <div className="row">
                 <div className="col-xl-8 col-lg-10 mx-auto">
                     <div className="blog-hero-content">
-                        <h1 className="blog-hero-title">{headline || page.data.title}</h1>
-                        <div dangerouslySetInnerHTML={{ __html: md.render(page.data.description) }}/>
+                        {headline ?
+                            <h1 className="blog-hero-title">{headline}</h1> :
+                            <h1 className="blog-hero-title" data-editable="text" data-prop="title">{page.data.title}</h1>
+                        }
+                        <div data-editable="text" data-type="block" data-prop="description" dangerouslySetInnerHTML={{ __html: md.render(page.data.description) }}/>
                     </div>
                 </div>
                 </div>

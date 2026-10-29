@@ -1,0 +1,25 @@
+label: About Team
+description: About Team section
+icon: groups
+picker_preview:
+  text:
+    - About Team
+  icon:
+    - groups
+preview:
+  text:
+    - key: title
+    - About Team
+  icon:
+    - groups
+value:
+  _type: about/team
+  title: Our leadership & Team Members
+  team_members: []
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+_inputs:
+  team_members:
+    type: array
+    options:
+      structures: _structures.team_members

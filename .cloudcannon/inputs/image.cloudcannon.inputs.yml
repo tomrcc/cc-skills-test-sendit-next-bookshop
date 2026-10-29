@@ -1,0 +1,5 @@
+image:
+  type: image
+image_alt:
+  type: text
+  label: Image alt text

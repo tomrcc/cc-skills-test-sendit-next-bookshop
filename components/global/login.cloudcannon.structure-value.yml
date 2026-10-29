@@ -1,0 +1,76 @@
+label: Login
+description: Login section
+icon: login
+picker_preview:
+  text:
+    - Login
+  icon:
+    - login
+preview:
+  text:
+    - key: title
+    - Login
+  icon:
+    - login
+value:
+  _type: global/login
+  title: Log In
+  fullname:
+    heading: Full Name
+    placeholder: Your Name
+  email:
+    heading: Email Address
+    placeholder: Your Email
+  checkbox_text: Remember Me
+  forgot_password_text: Forget Password
+  divider_text: or
+  google_button_text: Sign In with Google
+  facebook_button_text: Sign In with FaceBook
+  log_in_button:
+    text: Log In
+  sign_up_button:
+    link: /signup
+    text: Create an Account
+_inputs_from_glob:
+  - /.cloudcannon/inputs/title.cloudcannon.inputs.yml
+_inputs:
+  fullname:
+    type: object
+    options:
+      preview:
+        icon: person
+  email:
+    type: object
+    options:
+      preview:
+        icon: mail
+  log_in_button:
+    type: object
+    options:
+      preview:
+        icon: login
+  sign_up_button:
+    type: object
+    options:
+      preview:
+        icon: border_color
+  heading:
+    type: text
+  placeholder:
+    type: text
+  checkbox_text:
+    type: text
+  forgot_password_text:
+    type: text
+  divider_text:
+    type: text
+    comment: Shown between the sign-in buttons
+  google_button_text:
+    type: text
+  facebook_button_text:
+    type: text
+  text:
+    type: text
+    label: Button text
+  link:
+    type: url

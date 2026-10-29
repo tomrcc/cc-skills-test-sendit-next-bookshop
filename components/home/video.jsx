@@ -1,12 +1,15 @@
-export default function HomeVideo({ block, dataBinding }) {
+export default function HomeVideo(block) {
     return (
-        <section className="video pb-xxl-22 pb-lg-18 pb-12" data-cms-bind={dataBinding}>
+        <section className="video pb-xxl-22 pb-lg-18 pb-12">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-10 mx-auto">
                         <div className="banner">
                             <div className="rounded-box">
                                 <img
+                                    data-editable="image"
+                                    data-prop-src="image"
+                                    data-prop-alt="image_alt"
                                     src={block.image}
                                     className="w-100"
                                     alt={block.image_alt}

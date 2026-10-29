@@ -11,7 +11,7 @@ export default function GlobalFaqItem( {faq, i}) {
     };
     
 	return (
-        <div className={`accordion-item ${ i === 0 ? 'shows': ''}`}>
+        <div className={`accordion-item ${ i === 0 ? 'shows': ''}`} data-editable="array-item">
             <span>0{i+1}</span>
             <h2 className="accordion-header" id={`heading${i}`} onClick={handleClick}>
             <button
@@ -23,7 +23,7 @@ export default function GlobalFaqItem( {faq, i}) {
                 aria-controls={`collapse${i}`}
                 onClick={handleClick}
             >
-                <p className="header-content">{faq.title}</p>
+                <p className="header-content" data-editable="text" data-prop="title">{faq.title}</p>
             </button>
             </h2>
             <div
@@ -32,7 +32,7 @@ export default function GlobalFaqItem( {faq, i}) {
             aria-labelledby={`heading${i}`}
             data-bs-parent="#accordionExample"
             >
-            <div className="accordion-body" dangerouslySetInnerHTML={{ __html: md.render(faq.description) }}></div>
+            <div className="accordion-body" data-editable="text" data-type="block" data-prop="description" dangerouslySetInnerHTML={{ __html: md.render(faq.description) }}></div>
             </div>
         </div>
 	);

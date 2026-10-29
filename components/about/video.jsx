@@ -2,17 +2,17 @@ import Link from "next/link";
 import MarkdownIt from 'markdown-it';
 const md = new MarkdownIt({ html: true });
 
-export default function AboutVideo({ block, dataBinding }) {
+export default function AboutVideo(block) {
     return (
-        <section className="works" data-cms-bind={dataBinding}>
+        <section className="works">
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-lg-6">
                         <div className="works-content">
-                            <h2>{block.title}</h2>
-                            <div dangerouslySetInnerHTML={{ __html: md.render(block.description) }}/>
+                            <h2 data-editable="text" data-prop="title">{block.title}</h2>
+                            <div data-editable="text" data-type="block" data-prop="description" dangerouslySetInnerHTML={{ __html: md.render(block.description) }}/>
                             {block.button &&
-                                <Link href={block.button.link} className="btn btn-lg btn-white"> {block.button.text} </Link>
+                                <Link href={block.button.link} className="btn btn-lg btn-white"> <editable-text data-prop="button.text">{block.button.text}</editable-text> </Link>
                             }
                         </div>
                     </div>
@@ -21,6 +21,9 @@ export default function AboutVideo({ block, dataBinding }) {
                         {block.video &&
                         <div className="works-banner">
                             <img
+                                data-editable="image"
+                                data-prop-src="video.image"
+                                data-prop-alt="video.image_alt"
                                 src={block.video.image}
                                 className="w-100"
                                 alt={block.video.image_alt}

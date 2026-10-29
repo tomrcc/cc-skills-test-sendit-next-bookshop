@@ -11,23 +11,8 @@ import { MDXRemote } from 'next-mdx-remote';
 import ButtonSnippet from '../../components/snippets/button';
 import IframeSnippet from '../../components/snippets/iframe';
 
-// TODO: Get glob imports working so we don't have to manually add components
-import allComponents from '../../components/snippets/**/*.*';
-// console.log("allComponentsServer:", allComponents);
-
-// const componentsTestImport = {};
-// for (const component of Object.keys(allComponents)) {
-// 	const componentFunction = allComponents[component].default;
-// 	const functionName = componentFunction.name;
-// 	console.log({ componentFunction });
-	
-// 	componentsTestImport[functionName] = componentFunction;
-// }
-// console.log({componentsTestImport})
-
-// Add components here to allow in visual editor after importing them manually
+// Every MDX component posts use; the snippet names in cloudcannon.config.yml match these keys.
 const components = { ButtonSnippet, IframeSnippet };
-// console.log({components})
 
 export default function Post({ page, posts, mdxSource, dateFormatted }) {
 	const wordCount = page.content.split(" ").length;
@@ -51,27 +36,32 @@ export default function Post({ page, posts, mdxSource, dateFormatted }) {
 					<div className="col-lg-12">
 						<article className="blog-single">
 							<div className="inner-blog-details">
-								<h2 className="w-xxl-70 w-xl-80 w-100">{page.data.title}</h2>
+								<h2 className="w-xxl-70 w-xl-80 w-100" data-editable="text" data-prop="title">{page.data.title}</h2>
 								<div className="inner-blog-details-meta">
 									<ul className="list-unstyled">
 										<li className="list-inline-item">
 										<p>{dateFormatted}</p>
 										</li>
 										<li className="list-inline-item">
-											<p>{ page.data.author}</p>
+											<p data-editable="text" data-prop="author">{ page.data.author}</p>
 										</li>
 										<li className="list-inline-item">
-											<p>{ readingTime } <span>minutes read</span></p>
+											<p>{ readingTime } <span data-editable="text" data-prop="@data[blog].reading_time_label">{data.blog.reading_time_label}</span></p>
 										</li>
 										<li className="list-inline-item">
-											<p>{ wordCount } <span>words</span></p>
+											<p>{ wordCount } <span data-editable="text" data-prop="@data[blog].word_count_label">{data.blog.word_count_label}</span></p>
 										</li>
 									</ul>
 								</div>
 							</div>
-							<MDXRemote {...mdxSource} components={components} />
+							<div data-editable="text" data-type="block" data-prop="@content">
+								<MDXRemote {...mdxSource} components={components} />
+							</div>
 							<div className="rounded-box mb-xxl-11 mb-8">
 								<img
+									data-editable="image"
+									data-prop-src="featuredImg.image"
+									data-prop-alt="featuredImg.image_alt"
 									src={page.data.featuredImg.image}
 									className="w-100"
 									alt={page.data.featuredImg.image_alt}
@@ -88,7 +78,7 @@ export default function Post({ page, posts, mdxSource, dateFormatted }) {
 				<div className="row">
 					<div className="col-md-12">
 						<div className="blog-section">
-						<h2 className="blog-section-title">Recent Blog</h2>
+						<h2 className="blog-section-title" data-editable="text" data-prop="@data[blog].recent_posts_heading">{data.blog.recent_posts_heading}</h2>
 						</div>
 					</div>
 				</div>
@@ -104,7 +94,7 @@ export default function Post({ page, posts, mdxSource, dateFormatted }) {
 }
 
 export async function getStaticPaths() {
-	const slugs = (await filer.listItemSlugs('posts')).map((slug) => ({ params: { slug } }));
+	const slugs = (await filer.listItemSlugs('posts')).filter((slug) => !slug.startsWith('_')).map((slug) => ({ params: { slug } }));
 	const ignored = {
 	};
 
